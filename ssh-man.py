@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import pathlib
 import os
 import pickle
