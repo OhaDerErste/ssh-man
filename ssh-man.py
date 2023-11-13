@@ -18,7 +18,7 @@ else:
     saves = []
 
 while True:
-    print("Welcome to Ohas shitty SSH-Man. What do you wanna do?\n [1] Add a new connection\n [2] View saved connections")
+    print("Welcome to Ohas shitty SSH-Man. What do you wanna do?\n[1] Add a new connection\n[2] View saved connections\n[3] Remove saved connection")
     sel = int(input())
 
     if sel == 1:
@@ -28,7 +28,7 @@ while True:
         saves.append([name, user, host])
         with open(savefile, "wb") as f:
             pickle.dump(saves, f)
-
+        print("Connection saved to connection list.")
     elif sel == 2:
         a = 0
         if not saves:
@@ -45,5 +45,25 @@ while True:
             else:
                 print("Invalid connection number.")
 
+    elif sel ==3:
+        print("Saved connections:")
+        a = 0
+        for i in saves:
+            a = a + 1
+            print(f"- [{a}] {i[0]}")
+        conn = int(input("Which connection would you like to remove?"))
+        conn -= 1
+        if 0 <= conn < len(saves):
+            choice = input(f"Do you really want to remove {saves[conn][0]}? [y/n]")
+            if choice == "y":
+                saves.pop(conn)
+                with open(savefile, "wb") as f:
+                    pickle.dump(saves, f)
+            elif choice == "n":
+                continue
+            else:
+                print("Invalid Input. Use y or n")
+        else:
+            print("Invalid connection number.")
     else:
         print("Invalid/Not implemented function.")
