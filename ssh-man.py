@@ -2,6 +2,8 @@
 import pathlib
 import os
 import pickle
+import subprocess
+import shlex
 
 # Check if save file exists and create it if not
 savefiledir = f"{pathlib.Path.home()}/.config/ssh-man"
@@ -41,7 +43,7 @@ while True:
             conn = int(input("Which connection would you like to connect to?"))
             conn -= 1
             if 0 <= conn < len(saves):
-                os.system(f"konsole -e ssh {saves[conn][1]}@{saves[conn][2]}")
+                os.system(f"ssh {saves[conn][1]}@{saves[conn][2]}")
             else:
                 print("Invalid connection number.")
 
