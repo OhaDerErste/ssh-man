@@ -20,7 +20,7 @@ else:
     saves = []
 
 while True:
-    print("Welcome to Ohas shitty SSH-Man. What do you wanna do?\n[1] Add a new connection\n[2] View saved connections\n[3] Remove saved connection")
+    print("Welcome to Ohas shitty SSH-Man. What do you wanna do?\n[1] Add a new connection\n[2] View saved connections\n[3] Remove saved connection\n[4] Execute a command on all hosts\n[5] Update and upgrade all hosts (apt only)")
     sel = int(input())
 
     if sel == 1:
@@ -43,6 +43,7 @@ while True:
             conn = int(input("Which connection would you like to connect to?"))
             conn -= 1
             if 0 <= conn < len(saves):
+                print(f"-------- Connecting to {saves[conn][0]} --------")
                 os.system(f"ssh {saves[conn][1]}@{saves[conn][2]}")
             else:
                 print("Invalid connection number.")
@@ -67,5 +68,15 @@ while True:
                 print("Invalid Input. Use y or n")
         else:
             print("Invalid connection number.")
+    elif sel == 4:
+        cmd = input("Type a command to execute on all saved hosts")
+        for i in saves:
+            print(f"-------- Connecting to {i[0]} --------")
+            os.system(f"ssh {i[1]}@{i[2]} -t '{cmd}'")
+
+    elif sel == 5:
+        for i in saves:
+            print(f"-------- Connecting to {i[0]} --------")
+            os.system(f"ssh {i[1]}@{i[2]} -t 'apt update && apt upgrade -y'")
     else:
         print("Invalid/Not implemented function.")
